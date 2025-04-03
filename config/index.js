@@ -25,11 +25,26 @@ export default defineConfig(async (merge, { command, mode }) => {
       375: 2,
       828: 1.81 / 2
     },
+    alias:{
+      '@tarojs/runtime': require.resolve('@tarojs/runtime'),
+    },
+    sass: {
+      // resource: [
+      //   path.resolve(__dirname, '..', 'src/assets/styles/custom_theme.scss')
+      // ],
+      // 默认京东 APP 10.0主题 > @import "@nutui/nutui-taro/dist/styles/variables.scss";
+      // 京东科技主题 > @import "@nutui/nutui-taro/dist/styles/variables-jdt.scss";
+      // 京东B商城主题 > @import "@nutui/nutui-taro/dist/styles/variables-jdb.scss";
+      // 京东企业业务主题 > @import "@nutui/nutui-taro/dist/styles/variables-jddkh.scss";
+      data: `@import "@nutui/nutui-taro/dist/styles/variables.scss";`
+    },
     sourceRoot: 'src',
     outputRoot: 'dist',
     plugins: ['@tarojs/plugin-html'],
+    // 全局变量设置
     defineConstants: {
     },
+    // 文件 copy 配置
     copy: {
       patterns: [
       ],
@@ -46,12 +61,23 @@ export default defineConfig(async (merge, { command, mode }) => {
     cache: {
       enable: false // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
     },
+    // 小程序端专用配置
     mini: {
       postcss: {
+        autoprefixer: {
+          enable: true,
+        },
         pxtransform: {
           enable: true,
           config: {
-
+            // https://docs.taro.zone/docs/size
+            // onePxTransform: true,
+            // unitPrecision: 5,
+            // propList: ['*'],
+            // selectorBlackList: [],
+            // replace: true,
+            // mediaQuery: false,
+            // minPixelValue: 0
           }
         },
         cssModules: {
@@ -62,8 +88,8 @@ export default defineConfig(async (merge, { command, mode }) => {
           }
         }
       },
+      // 自定义 Webpack 配置
       webpackChain(chain) {
-
         chain.plugin('unplugin-vue-components').use(Components({
           resolvers: [NutUIResolver({taro: true})]
         }))
@@ -92,7 +118,23 @@ export default defineConfig(async (merge, { command, mode }) => {
             namingPattern: 'module', // 转换模式，取值为 global/module
             generateScopedName: '[name]__[local]___[hash:base64:5]'
           }
-        }
+        },
+        // https://docs.taro.zone/docs/size
+        // pxtransform: {
+        //   enable: true,
+        //   config: {
+        //     onePxTransform: true,
+        //     unitPrecision: 5,
+        //     propList: ['*'],
+        //     selectorBlackList: [],
+        //     replace: true,
+        //     mediaQuery: false,
+        //     minPixelValue: 0,
+        //     baseFontSize: 20,
+        //     maxRootSize: 40,
+        //     minRootSize: 20
+        //   }
+        // }
       },
       webpackChain(chain) {
 
