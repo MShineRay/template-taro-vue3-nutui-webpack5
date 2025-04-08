@@ -4,6 +4,7 @@ export default {
     'pages/activity/index',
     'pages/course/index',
     'pages/my/index',
+    'test/index',
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -38,6 +39,12 @@ export default {
       {
         pagePath: 'pages/my/index',
         text: '我的',
+        // iconPath: './assets/images/tabbar/my.png',
+        // selectedIconPath: './assets/images/tabbar/my-active.png'
+      },
+      {
+        pagePath: 'test/index',
+        text: '测试',
         // iconPath: './assets/images/tabbar/my.png',
         // selectedIconPath: './assets/images/tabbar/my-active.png'
       }

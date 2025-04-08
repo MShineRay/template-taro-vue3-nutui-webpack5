@@ -5,6 +5,8 @@ import prodConfig from './prod'
 import NutUIResolver from '@nutui/auto-import-resolver'
 import Components from 'unplugin-vue-components/webpack'
 
+import path from 'path'
+
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig(async (merge, { command, mode }) => {
@@ -27,6 +29,11 @@ export default defineConfig(async (merge, { command, mode }) => {
     },
     alias:{
       '@tarojs/runtime': require.resolve('@tarojs/runtime'),
+      '@/api': path.resolve(__dirname, '..','src/api'),
+      '@/components': path.resolve(__dirname, '..', 'src/components'),
+      '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+      '@/package': path.resolve(__dirname, '..', 'package.json'),
+      '@/project': path.resolve(__dirname, '..', 'project.config.json'),
     },
     sass: {
       // resource: [
@@ -40,7 +47,7 @@ export default defineConfig(async (merge, { command, mode }) => {
     },
     sourceRoot: 'src',
     outputRoot: 'dist',
-    plugins: ['@tarojs/plugin-html'],
+    plugins: ['@tarojs/plugin-html', '@tarojs/plugin-http'],
     // 全局变量设置
     defineConstants: {
     },
@@ -93,6 +100,16 @@ export default defineConfig(async (merge, { command, mode }) => {
         chain.plugin('unplugin-vue-components').use(Components({
           resolvers: [NutUIResolver({taro: true})]
         }))
+
+        // chain.plugin('copyRawComponent').use(new CopyWebpackPlugin({
+        //   patterns: [{
+        //     from: path.resolve(__dirname, '../src/components/mp-html'), // 源目录
+        //     to: path.resolve(__dirname, '../dist/components/mp-html'),   // 目标目录
+        //   }]
+        // }))
+        // chain.plugin('ignoreRawComponent').use(new IgnorePlugin({
+        //   resourceRegExp: /mp-html/
+        // }))
       }
     },
     h5: {
