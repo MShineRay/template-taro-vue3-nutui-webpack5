@@ -13,6 +13,7 @@ export default {
     navigationBarTextStyle: 'black'
   },
   tabBar: {
+    custom: true,
     color: '#999',
     selectedColor: '#1aad19',
     backgroundColor: '#fff',

@@ -34,6 +34,8 @@ export default defineConfig(async (merge, { command, mode }) => {
       '@/utils': path.resolve(__dirname, '..', 'src/utils'),
       '@/package': path.resolve(__dirname, '..', 'package.json'),
       '@/project': path.resolve(__dirname, '..', 'project.config.json'),
+      '@/stores': path.resolve(__dirname, '..', 'src/stores'),
+      '@/assets': path.resolve(__dirname, '..', 'src/assets'),
     },
     sass: {
       // resource: [

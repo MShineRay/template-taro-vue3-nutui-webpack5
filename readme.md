@@ -5,6 +5,8 @@
 - [taro](https://docs.taro.zone/docs/)
   - [Taro 使用原生模块](https://docs.taro.zone/docs/hybrid)
   - [Taro 模式和环境变了 TARO_APP_XXXXXXX](https://docs.taro.zone/docs/env-mode-config)
+  - [Taro 微信小程序自定义Tabbar](https://docs.taro.zone/docs/custom-tabbar)
+    - [微信小程序自定义 TabBar（Vue3）](https://github.com/NervJS/taro/tree/next/examples/custom-tabbar-vue3)
 - [nutui-vue](https://nutui.jd.com/taro/vue/4x/#/zh-CN/guide/intro)
   - [nutui-vue组件](https://nutui.jd.com/taro/vue/4x/#/zh-CN/component/button)
 - [vue3](https://vuejs.org/)
