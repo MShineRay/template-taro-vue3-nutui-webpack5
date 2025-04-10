@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 
 import './app.scss'
+
 // 引入所有组件的样式文件
 // import "@nutui/nutui-taro/dist/style.css";
 

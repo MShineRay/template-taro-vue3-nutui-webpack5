@@ -6,6 +6,7 @@ module.exports = {
       framework: 'vue3',
       ts: false,
       compiler: 'webpack5',
+      'dynamic-import-node': true,// dynamic-import https://docs.taro.zone/docs/dynamic-import
     }]
   ]
 }

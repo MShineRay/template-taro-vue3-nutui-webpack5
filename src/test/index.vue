@@ -24,7 +24,7 @@
 
 <script setup>
 import { reactive } from 'vue'
-import { getLoginModes } from '@/api/client/auth' // 引入封装的请求方法
+import {apiAuthGetLoginModes} from "../services/auth/authGetLoginModes"; // 引入封装的请求方法
 
 const state = reactive({
   msg: 'toast',
@@ -57,7 +57,7 @@ const triggerPostRequest = async () => {
     key: 'value'
   }
   try {
-    const response = await getLoginModes()
+    const response = await apiAuthGetLoginModes()
     console.log('请求成功:', response)
   } catch (error) {
     console.error('请求失败:', error)
