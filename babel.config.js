@@ -8,5 +8,9 @@ module.exports = {
       compiler: 'webpack5',
       'dynamic-import-node': true,// dynamic-import https://docs.taro.zone/docs/dynamic-import
     }]
-  ]
+  ],
+  // plugins: [
+  //   ['@babel/plugin-proposal-decorators', { legacy: true }],
+  //   ['@babel/plugin-proposal-class-properties', { loose: true }]
+  // ]
 }

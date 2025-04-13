@@ -36,42 +36,48 @@ export default defineConfig(async (merge, { command, mode }) => {
       '@/project': path.resolve(__dirname, '..', 'project.config.json'),
       '@/stores': path.resolve(__dirname, '..', 'src/stores'),
       '@/assets': path.resolve(__dirname, '..', 'src/assets'),
+      '@/services': path.resolve(__dirname, '..', 'src/services'),
+      '@/theme': path.resolve(__dirname, '..', 'src/theme'),
+      '@/pages': path.resolve(__dirname, '..', 'src/pages'),
+      '@/config': path.resolve(__dirname, '..', 'src/config'),
+      '@/constants': path.resolve(__dirname, '..', 'src/constants'),
+      '@/hooks': path.resolve(__dirname, '..', 'src/hooks'),
+      '@/mixins': path.resolve(__dirname, '..', 'src/mixins'),
+      '@/directives': path.resolve(__dirname, '..', 'src/directives'),
+      '@/filters': path.resolve(__dirname, '..', 'src/filters'),
     },
     sass: {
-      // resource: [
-      //   path.resolve(__dirname, '..', 'src/assets/styles/custom_theme.scss')
-      // ],
+      // projectDirectory: path.resolve(__dirname, '..'),
+      resource: [path.resolve(__dirname, '..', 'src/assets/styles/custom_theme.scss')],
       // 默认京东 APP 10.0主题 > @import "@nutui/nutui-taro/dist/styles/variables.scss";
       // 京东科技主题 > @import "@nutui/nutui-taro/dist/styles/variables-jdt.scss";
       // 京东B商城主题 > @import "@nutui/nutui-taro/dist/styles/variables-jdb.scss";
       // 京东企业业务主题 > @import "@nutui/nutui-taro/dist/styles/variables-jddkh.scss";
-      data: `@import "@nutui/nutui-taro/dist/styles/variables.scss";`
+      data: `@import "@nutui/nutui-taro/dist/styles/variables.scss";`,
     },
     sourceRoot: 'src',
     outputRoot: 'dist',
     plugins: ['@tarojs/plugin-html', '@tarojs/plugin-http'],
     // 全局变量设置
-    defineConstants: {
-    },
+    defineConstants: {},
     // 文件 copy 配置
     copy: {
-      patterns: [
-      ],
-      options: {
-      }
+      patterns: [],
+      options: {},
     },
     framework: 'vue3',
     compiler: {
       type: 'webpack5',
       prebundle: {
-        enable: false
-      }
+        enable: false,
+      },
     },
     cache: {
-      enable: false // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
+      enable: false, // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
     },
     // 小程序端专用配置
     mini: {
+      enableSourceMap: false,
       postcss: {
         autoprefixer: {
           enable: true,
@@ -87,22 +93,41 @@ export default defineConfig(async (merge, { command, mode }) => {
             // replace: true,
             // mediaQuery: false,
             // minPixelValue: 0
-          }
+          },
         },
         cssModules: {
           enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
           config: {
             namingPattern: 'module', // 转换模式，取值为 global/module
-            generateScopedName: '[name]__[local]___[hash:base64:5]'
-          }
-        }
+            generateScopedName: '[name]__[local]___[hash:base64:5]',
+          },
+        },
       },
       // 自定义 Webpack 配置
       webpackChain(chain) {
-        chain.plugin('unplugin-vue-components').use(Components({
-          resolvers: [NutUIResolver({taro: true})]
-        }))
+        chain.plugin('unplugin-vue-components').use(
+          Components({
+            resolvers: [NutUIResolver({ taro: true })],
+          })
+        );
 
+        chain.merge({
+          plugin: {
+            install: {
+              plugin: require('terser-webpack-plugin'),
+              args: [
+                {
+                  terserOptions: {
+                    compress: true, // 默认使用terser压缩
+                    // mangle: false,
+                    keep_classnames: true, // 不改变class名称
+                    keep_fnames: true, // 不改变函数名称
+                  },
+                },
+              ],
+            },
+          },
+        });
         // chain.plugin('copyRawComponent').use(new CopyWebpackPlugin({
         //   patterns: [{
         //     from: path.resolve(__dirname, '../src/components/mp-html'), // 源目录
@@ -112,31 +137,31 @@ export default defineConfig(async (merge, { command, mode }) => {
         // chain.plugin('ignoreRawComponent').use(new IgnorePlugin({
         //   resourceRegExp: /mp-html/
         // }))
-      }
+      },
     },
     h5: {
       publicPath: '/',
       staticDirectory: 'static',
       output: {
         filename: 'js/[name].[hash:8].js',
-        chunkFilename: 'js/[name].[chunkhash:8].js'
+        chunkFilename: 'js/[name].[chunkhash:8].js',
       },
       miniCssExtractPluginOption: {
         ignoreOrder: true,
         filename: 'css/[name].[hash].css',
-        chunkFilename: 'css/[name].[chunkhash].css'
+        chunkFilename: 'css/[name].[chunkhash].css',
       },
       postcss: {
         autoprefixer: {
           enable: true,
-          config: {}
+          config: {},
         },
         cssModules: {
           enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
           config: {
             namingPattern: 'module', // 转换模式，取值为 global/module
-            generateScopedName: '[name]__[local]___[hash:base64:5]'
-          }
+            generateScopedName: '[name]__[local]___[hash:base64:5]',
+          },
         },
         // https://docs.taro.zone/docs/size
         // pxtransform: {
@@ -156,25 +181,41 @@ export default defineConfig(async (merge, { command, mode }) => {
         // }
       },
       webpackChain(chain) {
+        chain.plugin('unplugin-vue-components').use(
+          Components({
+            resolvers: [NutUIResolver({ taro: true })],
+          })
+        );
 
-        chain.plugin('unplugin-vue-components').use(Components({
-          resolvers: [NutUIResolver({taro: true})]
-        }))
-      }
+        // chain.merge({
+        //   optimization: {
+        //     splitChunks: {
+        //       cacheGroups: {
+        //         styles: {
+        //           name: 'styles',
+        //           test: /\.(scss|css)$/,
+        //           chunks: 'all',
+        //           enforce: true,
+        //         },
+        //       },
+        //     },
+        //   },
+        // });
+      },
     },
     rn: {
       appName: 'taroDemo',
       postcss: {
         cssModules: {
           enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  };
   if (process.env.NODE_ENV === 'development') {
     // 本地开发构建配置（不混淆压缩）
-    return merge({}, baseConfig, devConfig)
+    return merge({}, baseConfig, devConfig);
   }
   // 生产构建配置（默认开启压缩混淆等）
-  return merge({}, baseConfig, prodConfig)
-})
+  return merge({}, baseConfig, prodConfig);
+});

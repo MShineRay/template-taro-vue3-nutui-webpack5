@@ -7,10 +7,16 @@ export default {
     'test/index',
   ],
   window: {
-    backgroundTextStyle: 'light',
+    backgroundColor: '#f7f7f7',
+    navigationBarTextStyle: 'black',
     navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black'
+    enablePullDownRefresh: false,
+    onReachBottomDistance: 50,
+    // safeArea: {
+    //   bottom: {
+    //     offset: '20px' // 或指定具体值如 '34px'
+    //   }
+    // }
   },
   tabBar: {
     custom: true,
